@@ -18,6 +18,6 @@ export const pathnames = {
 
   // Also (optional) catch-all segments are supported
 
-} satisfies Pathnames<typeof locales>;
+} satisfies Pathnames<typeof locales>
 
 export const { Link, redirect, usePathname, useRouter } = createLocalizedPathnamesNavigation({ locales, pathnames });

@@ -9,7 +9,6 @@ import { Dropdown, DropdownTrigger, DropdownMenu, DropdownSection, DropdownItem,
 import { useLocale } from 'next-intl'
 import { FaGlobe } from "react-icons/fa";
 export const LangSwitch = () => {
-
   const pathname = usePathname();
   const router = useRouter();
   const params = useParams();
@@ -32,9 +31,9 @@ export const LangSwitch = () => {
       </DropdownTrigger>
 
       <DropdownMenu
-        aria-label="Dropdown Language"
-      >
-        <DropdownSection classNames={{ base: 'mb-0' }}>
+        aria-label="Dropdown Language"  >
+        <DropdownSection
+          classNames={{ base: 'mb-0' }}>
           {
             siteConfig.langs.map((it) => {
               return (

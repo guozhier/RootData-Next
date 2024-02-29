@@ -1,13 +1,5 @@
 {
-  "typescript.tsdk": "node_modules/typescript/lib",
-  "i18n-ally.localesPaths": [
-    "language",
-    "locales"
-  ],
-  "i18n-ally.sourceLanguage": "zh",
-  "i18n-ally.dirStructure": "auto",
-  "i18n-ally.editor.preferEditor": true,
-  "i18n-ally.keystyle": "nested",
+  "i18n-ally.localesPaths": ["locales"],
   // Enable the ESlint flat config support
   "eslint.experimental.useFlatConfig": true,
 
@@ -17,10 +9,38 @@
 
   // Auto fix
   "editor.codeActionsOnSave": {
-    "source.fixAll": "never",
     "source.fixAll.eslint": "explicit",
     "source.organizeImports": "never"
   },
 
-  "CodeGPT.apiKey": "CodeGPT Plus Beta",
+  // Silent the stylistic rules in you IDE, but still auto fix them
+  "eslint.rules.customizations": [
+    { "rule": "style/*", "severity": "off" },
+    { "rule": "format/*", "severity": "off" },
+    { "rule": "*-indent", "severity": "off" },
+    { "rule": "*-spacing", "severity": "off" },
+    { "rule": "*-spaces", "severity": "off" },
+    { "rule": "*-order", "severity": "off" },
+    { "rule": "*-dangle", "severity": "off" },
+    { "rule": "*-newline", "severity": "off" },
+    { "rule": "*quotes", "severity": "off" },
+    { "rule": "*semi", "severity": "off" }
+  ],
+
+  // Enable eslint for all supported languages
+  "eslint.validate": [
+    "javascript",
+    "javascriptreact",
+    "typescript",
+    "typescriptreact",
+    "vue",
+    "react",
+    "html",
+    "markdown",
+    "json",
+    "jsonc",
+    "yaml",
+    "toml"
+  ],
+  "i18n-ally.keystyle": "nested"
 }

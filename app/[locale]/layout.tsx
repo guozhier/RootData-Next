@@ -1,14 +1,15 @@
-import "@/styles/globals.css";
-import { Metadata, Viewport } from "next";
-import { siteConfig } from "@/config/site";
-import { fontSans } from "@/config/fonts";
-import { Providers } from "./providers";
+import '@/styles/globals.css'
+import type { Metadata, Viewport } from 'next'
+import { Link } from '@nextui-org/link'
+import clsx from 'clsx'
+import { notFound } from 'next/navigation'
+import { NextIntlClientProvider } from 'next-intl'
+import { SessionProvider } from 'next-auth/react'
+import { Providers } from './providers'
 import { PageHeader } from '@/components/layout/PageHeader'
-import { Link } from "@nextui-org/link";
-import clsx from "clsx";
-import { notFound } from 'next/navigation';
-import { NextIntlClientProvider } from 'next-intl';
-import { SessionProvider } from "next-auth/react"
+import { fontSans } from '@/config/fonts'
+import { siteConfig } from '@/config/site'
+
 export const metadata: Metadata = {
   title: {
     default: siteConfig.name,
@@ -16,44 +17,42 @@ export const metadata: Metadata = {
   },
   description: siteConfig.description,
   icons: {
-    icon: "/favicon.ico",
+    icon: '/favicon.ico',
     // shortcut: "/favicon-16x16.png",
     // apple: "/apple-touch-icon.png",
   },
-};
+}
 
 export const viewport: Viewport = {
   themeColor: [
-    { media: "(prefers-color-scheme: light)", color: "white" },
-    { media: "(prefers-color-scheme: dark)", color: "black" },
+    { media: '(prefers-color-scheme: light)', color: 'white' },
+    { media: '(prefers-color-scheme: dark)', color: 'black' },
   ],
 }
 
-
-
 export default async function LocaleLayout({ children, params: { locale } }: {
-  children: React.ReactNode;
-  params: any;
+  children: React.ReactNode
+  params: any
 }) {
-
   // Show a 404 error if the user requests an unknown locale
   // if (params.lang !== locale) {
   //   notFound();
   // }
 
+  const locales = ['en', 'zh', 'vi']
 
-  const locales = ['en', 'zh', 'vi'];
+  const isValidLocale = locales.includes(locale)
 
-  const isValidLocale = locales.some((cur) => cur === locale);
+  if (!isValidLocale)
+    notFound()
 
-  if (!isValidLocale) notFound();
-
-  let messages;
+  let messages
   try {
-    messages = (await import(`@/locales/${locale}.json`)).default;
-  } catch (error) {
-    console.error(error);
-    notFound();
+    messages = (await import(`@/locales/${locale}.json`)).default
+  }
+  catch (error) {
+    console.error(error)
+    notFound()
   }
 
   return (
@@ -61,12 +60,12 @@ export default async function LocaleLayout({ children, params: { locale } }: {
       <head />
       <body
         className={clsx(
-          "min-h-screen bg-background font-sans antialiased",
-          fontSans.variable
+          'min-h-screen bg-background font-sans antialiased',
+          fontSans.variable,
         )}
       >
         <NextIntlClientProvider messages={messages}>
-          <Providers themeProps={{ attribute: "class", defaultTheme: "light" }}>
+          <Providers themeProps={{ attribute: 'class', defaultTheme: 'light' }}>
             <div className="relative flex flex-col h-screen">
               <PageHeader />
               <main className="container mx-auto max-w-7xl pt-16 px-6 flex-grow">
@@ -88,5 +87,5 @@ export default async function LocaleLayout({ children, params: { locale } }: {
         </NextIntlClientProvider>
       </body>
     </html>
-  );
+  )
 }
